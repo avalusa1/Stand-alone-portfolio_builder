@@ -1,9 +1,14 @@
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useEffect } from "react";
 import { portfolioConfig } from "../data/portfolioData";
 import "./styles/Landing.css";
 
 const Landing = ({ children }: PropsWithChildren) => {
   const { firstName, lastName, title, subtitle } = portfolioConfig.personal;
+  
+  // Set document title dynamically
+  useEffect(() => {
+    document.title = `${firstName} ${lastName} - ${title}`;
+  }, [firstName, lastName, title]);
   
   return (
     <>
