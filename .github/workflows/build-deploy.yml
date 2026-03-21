@@ -51,14 +51,11 @@ jobs:
         run: npm run build
 
       - name: � Deploy to GitHub Pages
-        run: |
-          cd dist
-          git init
-          git config user.email "actions@github.com"
-          git config user.name "GitHub Actions"
-          git add -A
-          git commit -m "Deploy: Built portfolio from ${{ github.sha }}"
-          git push -f https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          cname: ""
 
       - name: ✨ Success Notification
         run: |
