@@ -1,0 +1,68 @@
+name: Build & Deploy Portfolio
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'portfolio.config.json'
+      - 'src/**'
+      - 'package.json'
+      - '.github/workflows/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: deployment
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: 📚 Install Dependencies
+        run: npm ci
+
+      - name: ✅ Validate Config
+        run: npm run validate-config
+
+      - name: 🎨 Generate Portfolio Data
+        run: npm run generate-config
+
+      - name: 🖼️  Process Avatar (if custom photo)
+        run: npm run process-avatar
+        continue-on-error: true
+
+      - name: 🔨 Build Project
+        run: npm run build
+
+      - name: 📤 Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: 📦 Upload Artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: './dist'
+
+      - name: 🚀 Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v3
+
+      - name: ✨ Success Notification
+        run: |
+          echo "✅ Portfolio built and deployed successfully!"
+          echo "🌐 Live at: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"

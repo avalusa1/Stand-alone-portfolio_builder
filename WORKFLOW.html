@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Automation Workflow - Interactive Diagram</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 1000px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+
+        .workflow-container {
+            position: relative;
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 2px solid #e9ecef;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 15px;
+            border-radius: 8px;
+            background: white;
+            border-left: 4px solid #667eea;
+        }
+
+        .step:hover {
+            background: #f1f3ff;
+            transform: translateX(10px);
+            border-left-color: #764ba2;
+        }
+
+        .step:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-number {
+            min-width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-right: 20px;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-title {
+            font-weight: 600;
+            color: #333;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .step-description {
+            color: #666;
+            font-size: 0.95em;
+            margin-bottom: 8px;
+        }
+
+        .step-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            color: #555;
+            font-size: 0.9em;
+            line-height: 1.6;
+            margin-top: 10px;
+        }
+
+        .step.active .step-details {
+            max-height: 500px;
+        }
+
+        .step-details ul {
+            margin-left: 20px;
+        }
+
+        .step-details li {
+            margin-bottom: 5px;
+        }
+
+        .arrow {
+            text-align: center;
+            color: #667eea;
+            font-size: 1.5em;
+            margin: -15px 0;
+            font-weight: bold;
+        }
+
+        .timeline-visual {
+            position: relative;
+            margin: 30px 0;
+        }
+
+        .horizontal-timeline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin: 30px 0;
+            overflow-x: auto;
+            padding: 20px 0;
+        }
+
+        .timeline-node {
+            min-width: 100px;
+            height: 100px;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 0.85em;
+            padding: 10px;
+            font-weight: 600;
+            color: #333;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .timeline-node:hover {
+            background: #667eea;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .timeline-node.success {
+            background: #10b981;
+            color: white;
+            border-color: #10b981;
+        }
+
+        .timeline-connector {
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            min-width: 20px;
+        }
+
+        .timing {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .timing-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .timing-card-value {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .timing-card-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .feature {
+            background: white;
+            border: 2px solid #e9ecef;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.9em;
+            font-weight: 600;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+
+        .feature:hover {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .feature::before {
+            content: "✓ ";
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .info-banner {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            color: #1565c0;
+        }
+
+        .success-banner {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            color: #2e7d32;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .horizontal-timeline {
+                flex-wrap: wrap;
+            }
+
+            .timeline-connector {
+                display: none;
+            }
+
+            .timing {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .footer {
+            text-align: center;
+            color: #666;
+            margin-top: 30px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Portfolio Automation Workflow</h1>
+        <p class="subtitle">Interactive visualization of the complete CI/CD pipeline</p>
+
+        <div class="info-banner">
+            💡 <strong>Click on any step below to see detailed information</strong>
+        </div>
+
+        <div class="workflow-container">
+            <div class="step active" onclick="toggleStep(this)">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <div class="step-title">💻 You Edit portfolio.config.json</div>
+                    <div class="step-description">Update your portfolio information locally</div>
+                    <div class="step-details">
+                        <strong>What you do:</strong>
+                        <ul>
+                            <li>Edit personal information (name, email, title)</li>
+                            <li>Add/update projects and experience</li>
+                            <li>Select avatar (gender + index 1-4)</li>
+                            <li>Optionally add custom photo path</li>
+                        </ul>
+                        <strong>File location:</strong> portfolio.config.json
+                    </div>
+                </div>
+            </div>
+            <div class="arrow">↓</div>
+
+            <div class="step" onclick="toggleStep(this)">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <div class="step-title">📤 Git Push to Main Branch</div>
+                    <div class="step-description">Commit and push your changes to GitHub</div>
+                    <div class="step-details">
+                        <strong>Commands:</strong>
+                        <ul>
+                            <li><code>git add portfolio.config.json</code></li>
+                            <li><code>git commit -m "Update portfolio"</code></li>
+                            <li><code>git push origin main</code></li>
+                        </ul>
+                        <strong>Result:</strong> Triggers GitHub Actions workflow automatically
+                    </div>
+                </div>
+            </div>
+            <div class="arrow">↓</div>
+
+            <div class="step" onclick="toggleStep(this)">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <div class="step-title">✅ GitHub Actions Triggered</div>
+                    <div class="step-description">Workflow starts on ubuntu-latest runner (free)</div>
+                    <div class="step-details">
+                        <strong>Automatically:</strong>
+                        <ul>
+                            <li>Checks out your repository code</li>
+                            <li>Sets up Node.js 18 environment</li>
+                            <li>Installs all npm dependencies</li>
+                            <li>Ready for build pipeline</li>
+                        </ul>
+                        <strong>Duration:</strong> ~30 seconds
+                    </div>
+                </div>
+            </div>
+            <div class="arrow">↓</div>
+
+            <div class="step" onclick="toggleStep(this)">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <div class="step-title">🔍 Validate Configuration</div>
+                    <div class="step-description">Checks JSON schema before building</div>
+                    <div class="step-details">
+                        <strong>Validates:</strong>
+                        <ul>
+                            <li>Required fields present (firstName, email, etc.)</li>
+                            <li>Data types correct (string, number, array)</li>
+                            <li>Email format valid</li>
+                            <li>avatarIndex between 1-4</li>
+                            <li>gender is "male" or "female"</li>
+                        </ul>
+                        <strong>If INVALID:</strong> Build stops with error message
+                        <strong>If VALID:</strong> Continues to next step
+                    </div>
+                </div>
+            </div>
+            <div class="arrow">↓</div>
+
+            <div class="step" onclick="toggleStep(this)">
+                <div class="step-number">5</div>
+                <div class="step-content">
+                    <div class="step-title">🔧 Generate Portfolio Data</div>
+                    <div class="step-description">Converts JSON config to TypeScript code</div>
+                    <div class="step-details">
+                        <strong>Process:</strong>
+                        <ul>
+                            <li>Reads validated portfolio.config.json</li>
+                            <li>Determines avatar path:
+                                <ul style="margin-top: 5px;">
+                                    <li>If customPhotoPath: uses /public/avatars/custom-avatar.png</li>
+                                    <li>Else: uses /avatars/{gender}/avatar-{index}.svg</li>
+                                </ul>
+                            </li>
+                            <li>Generates src/data/portfolioData.ts</li>
+                            <li>TypeScript export ready for components</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="arrow">↓</div>
+
+            <div class="step" onclick="toggleStep(this)">
+                <div class="step-number">6</div>
+                <div class="step-content">
+                    <div class="step-title">🎨 Process Custom Avatar (Optional)</div>
+                    <div class="step-description">Converts custom photo to stylized avatar</div>
+                    <div class="step-details">
+                        <strong>Only runs if:</strong> customPhotoPath is set in config
+                        <br><br>
+                        <strong>Processing steps:</strong>
+                        <ul>
+                            <li>Reads custom photo from uploads/</li>
+                            <li>Square crops to 200x200px (center-focused)</li>
+                            <li>Boosts saturation by 20% (vibrant colors)</li>
+                            <li>Increases brightness by 5% (clearer look)</li>
+                            <li>Applies subtle blur effect (modern aesthetic)</li>
+                            <li>Exports as PNG to /public/avatars/custom-avatar.png</li>
+                        </ul>
+                        <strong>Supported formats:</strong> JPG, PNG, WebP, GIF
+                        <strong>Max size:</strong> 5MB
+                    </div>
+                </div>
+            </div>
+            <div class="arrow">↓</div>
+
+            <div class="step" onclick="toggleStep(this)">
+                <div class="step-number">7</div>
+                <div class="step-content">
+                    <div class="step-title">🏗️ Build Project</div>
+                    <div class="step-description">Compiles React + TypeScript to optimized dist/</div>
+                    <div class="step-details">
+                        <strong>Build steps:</strong>
+                        <ul>
+                            <li>TypeScript compiler (tsc) compiles React components</li>
+                            <li>Vite bundler optimizes code & assets</li>
+                            <li>Tree-shaking removes unused code</li>
+                            <li>CSS minification</li>
+                            <li>JavaScript minification</li>
+                            <li>Generates source maps for debugging</li>
+                        </ul>
+                        <strong>Output:</strong> /dist folder with optimized files
+                        <strong>If BUILD FAILS:</strong> Deployment stops, check error logs
+                    </div>
+                </div>
+            </div>
+            <div class="arrow">↓</div>
+
+            <div class="step" onclick="toggleStep(this)">
+                <div class="step-number">8</div>
+                <div class="step-content">
+                    <div class="step-title">📦 Upload & Deploy</div>
+                    <div class="step-description">Pushes built files to GitHub Pages</div>
+                    <div class="step-details">
+                        <strong>Deployment:</strong>
+                        <ul>
+                            <li>Takes /dist folder (compiled portfolio)</li>
+                            <li>Uploads to gh-pages branch</li>
+                            <li>GitHub Pages serves files live</li>
+                            <li>Your portfolio is now accessible!</li>
+                        </ul>
+                        <strong>URL:</strong> https://your-username.github.io/repository-name/
+                    </div>
+                </div>
+            </div>
+            <div class="arrow">↓</div>
+
+            <div class="step" onclick="toggleStep(this)">
+                <div class="step-number">✨</div>
+                <div class="step-content">
+                    <div class="step-title">🎉 Portfolio Live!</div>
+                    <div class="step-description">Your portfolio is now accessible worldwide</div>
+                    <div class="step-details">
+                        <strong>What happened:</strong>
+                        <ul>
+                            <li>✅ Config validated</li>
+                            <li>✅ Avatar generated or processed</li>
+                            <li>✅ Project compiled</li>
+                            <li>✅ Deployed to GitHub Pages</li>
+                        </ul>
+                        <strong>Share your portfolio URL with:</strong> Friends, employers, clients, social media
+                        <strong>Next time:</strong> Just edit config → push → automatic deployment!
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 style="margin-top: 40px; margin-bottom: 20px; color: #333;">⏱️ Timing Details</h2>
+        <div class="timing">
+            <div class="timing-card">
+                <div class="timing-card-value">2-3 min</div>
+                <div class="timing-card-label">Simple config update</div>
+            </div>
+            <div class="timing-card">
+                <div class="timing-card-value">3-5 min</div>
+                <div class="timing-card-label">With custom photo</div>
+            </div>
+            <div class="timing-card">
+                <div class="timing-card-value">30 sec</div>
+                <div class="timing-card-label">Setup & checkout</div>
+            </div>
+            <div class="timing-card">
+                <div class="timing-card-value">1-2 min</div>
+                <div class="timing-card-label">Build & deploy</div>
+            </div>
+        </div>
+
+        <h2 style="margin-top: 40px; margin-bottom: 20px; color: #333;">✨ Automation Features</h2>
+        <div class="features">
+            <div class="feature">Config Validation</div>
+            <div class="feature">Auto Code Generation</div>
+            <div class="feature">Photo Processing</div>
+            <div class="feature">Type Checking</div>
+            <div class="feature">Asset Optimization</div>
+            <div class="feature">Auto Deployment</div>
+            <div class="feature">Zero Config Needed</div>
+            <div class="feature">Free Hosting</div>
+        </div>
+
+        <div class="success-banner" style="margin-top: 30px;">
+            ✅ <strong>The entire workflow is fully automated!</strong> After you push to GitHub, everything happens automatically. Your portfolio is live in 2-5 minutes without any additional setup.
+        </div>
+
+        <div class="button-group">
+            <button class="btn btn-primary" onclick="expandAll()">Expand All</button>
+            <button class="btn btn-secondary" onclick="collapseAll()">Collapse All</button>
+        </div>
+
+        <div class="footer">
+            <p>Portfolio Automation System | Created with ❤️</p>
+            <p>Powered by GitHub Actions, Vite, React & TypeScript</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleStep(element) {
+            element.classList.toggle('active');
+        }
+
+        function expandAll() {
+            document.querySelectorAll('.step').forEach(step => {
+                step.classList.add('active');
+            });
+        }
+
+        function collapseAll() {
+            document.querySelectorAll('.step').forEach(step => {
+                step.classList.remove('active');
+            });
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+                const active = document.querySelector('.step.active');
+                if (active && active.nextElementSibling) {
+                    let next = active.nextElementSibling;
+                    while (next && !next.classList.contains('step')) {
+                        next = next.nextElementSibling;
+                    }
+                    if (next) {
+                        active.classList.remove('active');
+                        next.classList.add('active');
+                        next.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }
+            } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+                const active = document.querySelector('.step.active');
+                if (active && active.previousElementSibling) {
+                    let prev = active.previousElementSibling;
+                    while (prev && !prev.classList.contains('step')) {
+                        prev = prev.previousElementSibling;
+                    }
+                    if (prev) {
+                        active.classList.remove('active');
+                        prev.classList.add('active');
+                        prev.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

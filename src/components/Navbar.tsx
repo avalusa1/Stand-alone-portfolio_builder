@@ -2,27 +2,19 @@ import { useEffect } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import HoverLinks from "./HoverLinks";
 import { gsap } from "gsap";
-import { ScrollSmoother } from "gsap-trial/ScrollSmoother";
+import { portfolioConfig } from "../data/portfolioData";
+import AvatarSelector from "./AvatarSelector";
 import "./styles/Navbar.css";
 
-gsap.registerPlugin(ScrollSmoother, ScrollTrigger);
-export let smoother: ScrollSmoother;
+// ScrollSmoother is a GSAP Club plugin (trial not suitable for hosting).
+// Graceful fallback: register only ScrollTrigger.
+gsap.registerPlugin(ScrollTrigger);
+export let smoother: any = null;
 
 const Navbar = () => {
+  const { initials, email } = portfolioConfig.personal;
+  
   useEffect(() => {
-    smoother = ScrollSmoother.create({
-      wrapper: "#smooth-wrapper",
-      content: "#smooth-content",
-      smooth: 1.7,
-      speed: 1.7,
-      effects: true,
-      autoResize: true,
-      ignoreMobileResize: true,
-    });
-
-    smoother.scrollTop(0);
-    smoother.paused(true);
-
     let links = document.querySelectorAll(".header ul a");
     links.forEach((elem) => {
       let element = elem as HTMLAnchorElement;
@@ -31,26 +23,35 @@ const Navbar = () => {
           e.preventDefault();
           let elem = e.currentTarget as HTMLAnchorElement;
           let section = elem.getAttribute("data-href");
-          smoother.scrollTo(section, true, "top top");
+          if (section && smoother?.scrollTo) {
+            smoother.scrollTo(section, true, "top top");
+          } else {
+            // Fallback: standard scroll
+            const target = document.querySelector(section || "");
+            if (target) {
+              target.scrollIntoView({ behavior: "smooth" });
+            }
+          }
         }
       });
     });
-    window.addEventListener("resize", () => {
-      ScrollSmoother.refresh(true);
-    });
   }, []);
+
   return (
     <>
       <div className="header">
-        <a href="/#" className="navbar-title" data-cursor="disable">
-          RC
-        </a>
+        <div className="navbar-left">
+          <AvatarSelector size="sm" showBorder={true} />
+          <a href="/#" className="navbar-title" data-cursor="disable">
+            {initials}
+          </a>
+        </div>
         <a
-          href="mailto:rajeshchittyal21@gmail.com"
+          href={`mailto:${email}`}
           className="navbar-connect"
           data-cursor="disable"
         >
-          rajeshchittyal21@gmail.com
+          {email}
         </a>
         <ul>
           <li>

@@ -1,0 +1,99 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Portfolio Configuration Schema",
+  "type": "object",
+  "required": ["personal", "social", "projects", "skills", "experience", "about", "contact", "deployment"],
+  "properties": {
+    "personal": {
+      "type": "object",
+      "required": ["firstName", "lastName", "email"],
+      "properties": {
+        "firstName": { "type": "string", "minLength": 1 },
+        "lastName": { "type": "string", "minLength": 1 },
+        "initials": { "type": "string", "pattern": "^[A-Z]{2}$" },
+        "gender": { "type": "string", "enum": ["male", "female"] },
+        "avatarIndex": { "type": "integer", "minimum": 1, "maximum": 4 },
+        "customPhotoPath": { "type": ["string", "null"] },
+        "title": { "type": "string" },
+        "subtitle": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "phone": { "type": "string" },
+        "location": { "type": "string" },
+        "bio": { "type": "string" }
+      }
+    },
+    "social": {
+      "type": "object",
+      "properties": {
+        "github": { "type": "string", "format": "uri" },
+        "linkedin": { "type": "string", "format": "uri" },
+        "twitter": { "type": "string", "format": "uri" },
+        "instagram": { "type": "string", "format": "uri" },
+        "codepen": { "type": "string", "format": "uri" },
+        "behance": { "type": "string", "format": "uri" }
+      }
+    },
+    "projects": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "description"],
+        "properties": {
+          "id": { "type": "integer" },
+          "title": { "type": "string" },
+          "description": { "type": "string" },
+          "image": { "type": "string" },
+          "tags": { "type": "array", "items": { "type": "string" } },
+          "link": { "type": "string", "format": "uri" },
+          "liveDemo": { "type": "string", "format": "uri" }
+        }
+      }
+    },
+    "skills": {
+      "type": "object",
+      "properties": {
+        "frontend": { "type": "array", "items": { "type": "string" } },
+        "backend": { "type": "array", "items": { "type": "string" } },
+        "tools": { "type": "array", "items": { "type": "string" } },
+        "design": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "experience": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "company": { "type": "string" },
+          "position": { "type": "string" },
+          "duration": { "type": "string" },
+          "description": { "type": "string" },
+          "skills": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "about": {
+      "type": "object",
+      "properties": {
+        "headline": { "type": "string" },
+        "description": { "type": "string" },
+        "achievements": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "contact": {
+      "type": "object",
+      "properties": {
+        "headline": { "type": "string" },
+        "description": { "type": "string" },
+        "buttonText": { "type": "string" },
+        "ctaEmail": { "type": "string", "format": "email" }
+      }
+    },
+    "deployment": {
+      "type": "object",
+      "properties": {
+        "type": { "type": "string", "enum": ["github-pages", "vercel", "netlify"] },
+        "repository": { "type": "string" }
+      }
+    }
+  }
+}

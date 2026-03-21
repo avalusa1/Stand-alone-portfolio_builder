@@ -1,0 +1,46 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <circle cx="100" cy="100" r="100" fill="#F3E5F5"/>
+  
+  <!-- Hair (bun style) -->
+  <path d="M 65 50 Q 100 40 135 50 Q 135 85 100 95 Q 65 85 65 50 Z" fill="#D4A574"/>
+  <circle cx="100" cy="50" r="20" fill="#D4A574"/>
+  
+  <!-- Head -->
+  <circle cx="100" cy="100" r="40" fill="#F4A460"/>
+  
+  <!-- Ears -->
+  <ellipse cx="58" cy="95" rx="13" ry="25" fill="#F4A460"/>
+  <ellipse cx="142" cy="95" rx="13" ry="25" fill="#F4A460"/>
+  
+  <!-- Eyes (sparkle effect) -->
+  <circle cx="80" cy="85" r="6" fill="#4169E1"/>
+  <circle cx="120" cy="85" r="6" fill="#4169E1"/>
+  <circle cx="82" cy="83" r="3" fill="white"/>
+  <circle cx="122" cy="83" r="3" fill="white"/>
+  
+  <!-- Eyebrows -->
+  <path d="M 72 76 Q 80 72 88 76" stroke="#D4A574" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M 112 76 Q 120 72 128 76" stroke="#D4A574" stroke-width="2" fill="none" stroke-linecap="round"/>
+  
+  <!-- Nose -->
+  <path d="M 100 88 L 100 102" stroke="#E8A399" stroke-width="1.5"/>
+  
+  <!-- Blush (rosy cheeks) -->
+  <ellipse cx="68" cy="108" rx="10" ry="8" fill="#FFB6C1" opacity="0.5"/>
+  <ellipse cx="132" cy="108" rx="10" ry="8" fill="#FFB6C1" opacity="0.5"/>
+  
+  <!-- Mouth (joy) -->
+  <path d="M 80 118 Q 100 130 120 118" stroke="#FF69B4" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  
+  <!-- Neck -->
+  <rect x="88" y="135" width="24" height="16" fill="#F4A460"/>
+  
+  <!-- Body -->
+  <path d="M 70 151 L 62 190 Q 100 200 138 190 L 130 151 Z" fill="#9370DB"/>
+  
+  <!-- Necklace -->
+  <circle cx="92" cy="165" r="2" fill="#FFD700"/>
+  <circle cx="100" cy="167" r="2.5" fill="#FFD700"/>
+  <circle cx="108" cy="165" r="2" fill="#FFD700"/>
+</svg>
