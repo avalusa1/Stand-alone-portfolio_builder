@@ -6,6 +6,7 @@ import Cursor from "./Cursor";
 import Landing from "./Landing";
 import Navbar from "./Navbar";
 import SocialIcons from "./SocialIcons";
+import UserProfile from "./UserProfile";
 import WhatIDo from "./WhatIDo";
 import Work from "./Work";
 import setSplitText from "./utils/splitText";
@@ -39,6 +40,7 @@ const MainContainer = () => {
           <div className="container-main">
             <Landing />
             <About />
+            <UserProfile />
             <WhatIDo />
             <Career />
             <Work />
