@@ -1,12 +1,14 @@
 import { portfolioConfig } from "../data/portfolioData";
 
+const BASE_URL = import.meta.env.BASE_URL;
+
 interface AvatarSelectorProps {
   size?: "sm" | "md" | "lg";
   showBorder?: boolean;
 }
 
 const AvatarSelector = ({ size = "md", showBorder = true }: AvatarSelectorProps) => {
-  const avatarPath = portfolioConfig.personal.avatar;
+  const avatarPath = BASE_URL + portfolioConfig.personal.avatar;
   
   const sizeClasses = {
     sm: "w-16 h-16",
