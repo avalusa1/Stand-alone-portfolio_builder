@@ -79,6 +79,6 @@
 
   "deployment": {
     "type": "github-pages",
-    "repository": "your-username/portfolio"
+    "repository": "avalusa1/Stand-alone-portfolio_builder"
   }
 }
