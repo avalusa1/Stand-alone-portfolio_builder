@@ -2,41 +2,18 @@ import { useState, useCallback } from "react";
 import "./styles/Work.css";
 import WorkImage from "./WorkImage";
 import { MdArrowBack, MdArrowForward } from "react-icons/md";
+import { portfolioConfig } from "../data/portfolioData";
 
 const BASE_URL = import.meta.env.BASE_URL;
 
-const projects = [
-  {
-    title: "Solid Starters",
-    category: "Low-Code Platform",
-    tools: "Angular, Next.js, NestJS, MongoDB",
-    image: `${BASE_URL}images/Solidx.png`,
-  },
-  {
-    title: "Radix",
-    category: "E-Commerce",
-    tools: "Angular, Next.js, NestJS, CMS",
-    image: `${BASE_URL}images/radix.png`,
-  },
-  {
-    title: "Bond Cancellation",
-    category: "Import-Export Automation",
-    tools: "Angular, Next.js, NestJS, Workflows",
-    image: `${BASE_URL}images/bond.png`,
-  },
-  {
-    title: "Sapphire",
-    category: "CRM Platform",
-    tools: "AngularJS, NestJS, PostgreSQL",
-    image: `${BASE_URL}images/sapphire.png`,
-  },
-  {
-    title: "Mpro",
-    category: "Insurance Platform",
-    tools: "React.js, Node.js, Microservices",
-    image: `${BASE_URL}images/Maxlife.png`,
-  },
-];
+const projects = portfolioConfig.projects.map((p) => ({
+  title: p.title,
+  category: (p as { category?: string }).category || p.description,
+  tools: (p.tags || []).join(", "),
+  image: BASE_URL + p.image.replace(/^\//, ""),
+  link: p.link || "",
+  liveDemo: p.liveDemo || "",
+}));
 
 const Work = () => {
   const [currentIndex, setCurrentIndex] = useState(0);

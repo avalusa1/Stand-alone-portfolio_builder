@@ -1,7 +1,14 @@
+import { readFileSync } from 'fs';
+
+const config = JSON.parse(readFileSync('./portfolio.config.json', 'utf-8'));
+const [owner, repo] = (config.deployment?.repository || '/').split('/');
+const baseUrl = `https://${owner}.github.io/${repo}/`;
+
 // Check what's being served from GitHub Pages
-fetch('https://avalusa1.github.io/Stand-alone-portfolio_builder/')
+fetch(baseUrl)
   .then(r => r.text())
   .then(html => {
+    console.log('Checking:', baseUrl);
     console.log('HTML Length:', html.length);
     console.log('First 500 chars:');
     console.log(html.substring(0, 500));

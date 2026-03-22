@@ -1,7 +1,19 @@
 import { MdArrowOutward, MdCopyright } from "react-icons/md";
 import "./styles/Contact.css";
+import { portfolioConfig } from "../data/portfolioData";
 
 const Contact = () => {
+  const { firstName, lastName, email, education } = portfolioConfig.personal;
+  const { github, linkedin, twitter, instagram } = portfolioConfig.social;
+  const year = new Date().getFullYear();
+
+  const socialLinks = [
+    { label: "Github", href: github },
+    { label: "Linkedin", href: linkedin },
+    { label: "Twitter", href: twitter },
+    { label: "Instagram", href: instagram },
+  ].filter((s) => s.href);
+
   return (
     <div className="contact-section section-container" id="contact">
       <div className="contact-container">
@@ -10,54 +22,40 @@ const Contact = () => {
           <div className="contact-box">
             <h4>Email</h4>
             <p>
-              <a href="mailto:rajeshchittyal21@gmail.com" data-cursor="disable">
-                rajeshchittyal21@gmail.com
+              <a href={`mailto:${email}`} data-cursor="disable">
+                {email}
               </a>
             </p>
-            <h4>Education</h4>
-            <p>BSc in Computer Science</p>
+            {education && (
+              <>
+                <h4>Education</h4>
+                <p>{education}</p>
+              </>
+            )}
           </div>
           <div className="contact-box">
             <h4>Social</h4>
-            <a
-              href="https://github.com/raxx21"
-              target="_blank"
-              data-cursor="disable"
-              className="contact-social"
-            >
-              Github <MdArrowOutward />
-            </a>
-            <a
-              href="https://www.linkedin.com/in/rajesh-chityal-2a70141b3"
-              target="_blank"
-              data-cursor="disable"
-              className="contact-social"
-            >
-              Linkedin <MdArrowOutward />
-            </a>
-            <a
-              href="https://x.com/raxx21_official"
-              target="_blank"
-              data-cursor="disable"
-              className="contact-social"
-            >
-              Twitter <MdArrowOutward />
-            </a>
-            <a
-              href="https://www.instagram.com/therajeshchityal"
-              target="_blank"
-              data-cursor="disable"
-              className="contact-social"
-            >
-              Instagram <MdArrowOutward />
-            </a>
+            {socialLinks.map(({ label, href }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                data-cursor="disable"
+                className="contact-social"
+              >
+                {label} <MdArrowOutward />
+              </a>
+            ))}
           </div>
           <div className="contact-box">
             <h2>
-              Designed and Developed <br /> by <span>Rajesh Chityal</span>
+              Designed and Developed <br /> by{" "}
+              <span>
+                {firstName} {lastName}
+              </span>
             </h2>
             <h5>
-              <MdCopyright /> 2025
+              <MdCopyright /> {year}
             </h5>
           </div>
         </div>

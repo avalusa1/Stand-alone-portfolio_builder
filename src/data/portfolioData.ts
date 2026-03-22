@@ -13,6 +13,8 @@ export const portfolioConfig = {
     email: "john@example.com",
     phone: "+1 (555) 123-4567",
     location: "San Francisco, CA",
+    education: "BSc in Computer Science",
+    resumeUrl: "",
     bio: "Passionate full-stack engineer building scalable web applications.",
     avatar: "/avatars/male/avatar-m1.svg",
     gender: "male",
@@ -20,12 +22,12 @@ export const portfolioConfig = {
 
   // Social Links
   social: {
-    github: "https://github.com/yourusername",
-    linkedin: "https://linkedin.com/in/yourusername",
-    twitter: "https://twitter.com/yourusername",
-    instagram: "https://instagram.com/yourusername",
-    codepen: "https://codepen.io/yourusername",
-    behance: "https://behance.net/yourusername",
+    github: "",
+    linkedin: "",
+    twitter: "",
+    instagram: "",
+    codepen: "",
+    behance: "",
   },
 
   // Featured Projects
@@ -33,6 +35,7 @@ export const portfolioConfig = {
   {
     "id": 1,
     "title": "E-Commerce Platform",
+    "category": "Full Stack Application",
     "description": "Full-stack SaaS platform for online stores with real-time analytics.",
     "image": "/images/project1.png",
     "tags": [
@@ -40,12 +43,13 @@ export const portfolioConfig = {
       "Node.js",
       "MongoDB"
     ],
-    "link": "https://github.com/yourusername/project1",
-    "liveDemo": "https://project1-demo.com"
+    "link": "",
+    "liveDemo": ""
   },
   {
     "id": 2,
     "title": "AI Chat Dashboard",
+    "category": "AI Application",
     "description": "Interactive dashboard for managing AI conversations.",
     "image": "/images/project2.png",
     "tags": [
@@ -53,8 +57,8 @@ export const portfolioConfig = {
       "TypeScript",
       "WebSocket"
     ],
-    "link": "https://github.com/yourusername/project2",
-    "liveDemo": "https://project2-demo.com"
+    "link": "",
+    "liveDemo": ""
   }
 ],
 

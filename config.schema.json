@@ -19,18 +19,20 @@
         "email": { "type": "string", "format": "email" },
         "phone": { "type": "string" },
         "location": { "type": "string" },
+        "education": { "type": "string" },
+        "resumeUrl": { "type": "string" },
         "bio": { "type": "string" }
       }
     },
     "social": {
       "type": "object",
       "properties": {
-        "github": { "type": "string", "format": "uri" },
-        "linkedin": { "type": "string", "format": "uri" },
-        "twitter": { "type": "string", "format": "uri" },
-        "instagram": { "type": "string", "format": "uri" },
-        "codepen": { "type": "string", "format": "uri" },
-        "behance": { "type": "string", "format": "uri" }
+        "github": { "type": "string" },
+        "linkedin": { "type": "string" },
+        "twitter": { "type": "string" },
+        "instagram": { "type": "string" },
+        "codepen": { "type": "string" },
+        "behance": { "type": "string" }
       }
     },
     "projects": {
@@ -41,11 +43,12 @@
         "properties": {
           "id": { "type": "integer" },
           "title": { "type": "string" },
+          "category": { "type": "string" },
           "description": { "type": "string" },
           "image": { "type": "string" },
           "tags": { "type": "array", "items": { "type": "string" } },
-          "link": { "type": "string", "format": "uri" },
-          "liveDemo": { "type": "string", "format": "uri" }
+          "link": { "type": "string" },
+          "liveDemo": { "type": "string" }
         }
       }
     },

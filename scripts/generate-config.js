@@ -50,6 +50,8 @@ export const portfolioConfig = {
     email: "${config.personal.email}",
     phone: "${config.personal.phone || ""}",
     location: "${config.personal.location || ""}",
+    education: "${escapeQuotes(config.personal.education || "")}",
+    resumeUrl: "${config.personal.resumeUrl || ""}",
     bio: "${escapeQuotes(config.personal.bio || "")}",
     avatar: "${avatarPath}",
     gender: "${gender}",

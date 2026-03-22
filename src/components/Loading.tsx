@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./styles/Loading.css";
 import { useLoading } from "../context/LoadingProvider";
-
+import { portfolioConfig } from "../data/portfolioData";
 import Marquee from "react-fast-marquee";
 
 const Loading = ({ percent }: { percent: number }) => {
@@ -9,6 +9,8 @@ const Loading = ({ percent }: { percent: number }) => {
   const [loaded, setLoaded] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [clicked, setClicked] = useState(false);
+
+  const { initials, title, subtitle } = portfolioConfig.personal;
 
   if (percent >= 100) {
     setTimeout(() => {
@@ -46,7 +48,7 @@ const Loading = ({ percent }: { percent: number }) => {
     <>
       <div className="loading-header">
         <a href="/#" className="loader-title" data-cursor="disable">
-          RC
+          {initials}
         </a>
         <div className={`loaderGame ${clicked && "loader-out"}`}>
           <div className="loaderGame-container">
@@ -62,8 +64,8 @@ const Loading = ({ percent }: { percent: number }) => {
       <div className="loading-screen">
         <div className="loading-marquee">
           <Marquee>
-            <span> Full Stack Developer</span> <span>Software Engineer</span>
-            <span> Full Stack Developer</span> <span>Software Engineer</span>
+            <span> {title}</span> <span>{subtitle}</span>
+            <span> {title}</span> <span>{subtitle}</span>
           </Marquee>
         </div>
         <div

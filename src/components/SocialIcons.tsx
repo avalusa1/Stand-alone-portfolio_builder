@@ -8,8 +8,19 @@ import "./styles/SocialIcons.css";
 import { TbNotes } from "react-icons/tb";
 import { useEffect } from "react";
 import HoverLinks from "./HoverLinks";
+import { portfolioConfig } from "../data/portfolioData";
 
 const SocialIcons = () => {
+  const { github, linkedin, twitter, instagram } = portfolioConfig.social;
+  const { resumeUrl } = portfolioConfig.personal;
+
+  const socialLinks = [
+    { href: github, icon: <FaGithub /> },
+    { href: linkedin, icon: <FaLinkedinIn /> },
+    { href: twitter, icon: <FaXTwitter /> },
+    { href: instagram, icon: <FaInstagram /> },
+  ].filter((s) => s.href);
+
   useEffect(() => {
     const social = document.getElementById("social") as HTMLElement;
 
@@ -59,28 +70,19 @@ const SocialIcons = () => {
   return (
     <div className="icons-section">
       <div className="social-icons" data-cursor="icons" id="social">
-        <span>
-          <a href="https://github.com/rajeshchityal" target="_blank">
-            <FaGithub />
-          </a>
-        </span>
-        <span>
-          <a href="https://www.linkedin.com/in/rajeshchityal" target="_blank">
-            <FaLinkedinIn />
-          </a>
-        </span>
-        <span>
-          <a href="https://x.com/rajeshchityal" target="_blank">
-            <FaXTwitter />
-          </a>
-        </span>
-        <span>
-          <a href="https://www.instagram.com/rajeshchityal" target="_blank">
-            <FaInstagram />
-          </a>
-        </span>
+        {socialLinks.map(({ href, icon }, i) => (
+          <span key={i}>
+            <a href={href} target="_blank">
+              {icon}
+            </a>
+          </span>
+        ))}
       </div>
-      <a className="resume-button" href="#">
+      <a
+        className="resume-button"
+        href={resumeUrl || "#"}
+        target={resumeUrl ? "_blank" : undefined}
+      >
         <HoverLinks text="RESUME" />
         <span>
           <TbNotes />
