@@ -8,7 +8,7 @@ interface AvatarSelectorProps {
 }
 
 const AvatarSelector = ({ size = "md", showBorder = true }: AvatarSelectorProps) => {
-  const avatarPath = portfolioConfig.personal.avatar;
+  const avatarPath = import.meta.env.BASE_URL + portfolioConfig.personal.avatar;
   
   const sizeClasses = {
     sm: "w-16 h-16",
