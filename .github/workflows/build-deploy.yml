@@ -1,4 +1,4 @@
-name: Build & Deploy Portfolio
+﻿name: Build & Deploy Portfolio
 
 on:
   push:
@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -21,43 +21,53 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
-    
+
     steps:
-      - name: 📥 Checkout Code
+      - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: 📦 Setup Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'npm'
 
-      - name: 📚 Install Dependencies
+      - name: Install Dependencies
         run: npm ci
 
-      - name: ✅ Validate Config
+      - name: Validate Config
         run: npm run validate-config
 
-      - name: 🎨 Generate Portfolio Data
+      - name: Generate Portfolio Data
         run: npm run generate-config
 
-      - name: 🖼️  Process Avatar (if custom photo)
+      - name: Process Avatar
         run: npm run process-avatar
         continue-on-error: true
 
-      - name: 🔨 Build Project
+      - name: Build Project
         run: npm run build
 
-      - name: � Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          cname: ""
+          path: ./dist
 
-      - name: ✨ Success Notification
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Success Notification
         run: |
-          echo "✅ Portfolio built and deployed successfully!"
-          echo "🌐 Live at: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
+          echo "Portfolio built and deployed successfully!"
+          echo "Live at: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
