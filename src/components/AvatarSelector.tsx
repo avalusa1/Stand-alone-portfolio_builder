@@ -1,6 +1,6 @@
 import { portfolioConfig } from "../data/portfolioData";
 
-const BASE_URL = import.meta.env.BASE_URL;
+// Vite automatically handles BASE_URL from vite.config.ts base setting
 
 interface AvatarSelectorProps {
   size?: "sm" | "md" | "lg";
@@ -8,7 +8,7 @@ interface AvatarSelectorProps {
 }
 
 const AvatarSelector = ({ size = "md", showBorder = true }: AvatarSelectorProps) => {
-  const avatarPath = BASE_URL + portfolioConfig.personal.avatar;
+  const avatarPath = portfolioConfig.personal.avatar;
   
   const sizeClasses = {
     sm: "w-16 h-16",

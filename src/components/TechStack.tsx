@@ -12,16 +12,16 @@ import {
 } from "@react-three/rapier";
 
 const textureLoader = new THREE.TextureLoader();
-const BASE_URL = import.meta.env.BASE_URL;
+// Vite automatically handles BASE_URL from vite.config.ts base setting
 const imageUrls = [
-  `${BASE_URL}images/react2.webp`,
-  `${BASE_URL}images/next2.webp`,
-  `${BASE_URL}images/node2.webp`,
-  `${BASE_URL}images/express.webp`,
-  `${BASE_URL}images/mongo.webp`,
-  `${BASE_URL}images/mysql.webp`,
-  `${BASE_URL}images/typescript.webp`,
-  `${BASE_URL}images/javascript.webp`,
+  "/images/react2.webp",
+  "/images/next2.webp",
+  "/images/node2.webp",
+  "/images/express.webp",
+  "/images/mongo.webp",
+  "/images/mysql.webp",
+  "/images/typescript.webp",
+  "/images/javascript.webp",
 ];
 const textures = imageUrls.map((url) => textureLoader.load(url));
 

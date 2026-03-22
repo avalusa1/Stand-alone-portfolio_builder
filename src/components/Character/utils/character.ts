@@ -3,7 +3,7 @@ import { DRACOLoader, GLTF, GLTFLoader } from "three-stdlib";
 import { setCharTimeline, setAllTimeline } from "../../utils/GsapScroll";
 import { decryptFile } from "./decrypt";
 
-const BASE_URL = import.meta.env.BASE_URL;
+// Vite automatically handles BASE_URL from vite.config.ts base setting
 
 const setCharacter = (
   renderer: THREE.WebGLRenderer,
@@ -12,14 +12,14 @@ const setCharacter = (
 ) => {
   const loader = new GLTFLoader();
   const dracoLoader = new DRACOLoader();
-  dracoLoader.setDecoderPath(`${BASE_URL}draco/`);
+  dracoLoader.setDecoderPath("/draco/");
   loader.setDRACOLoader(dracoLoader);
 
   const loadCharacter = () => {
     return new Promise<GLTF | null>(async (resolve, reject) => {
       try {
         const encryptedBlob = await decryptFile(
-          `${BASE_URL}models/character.enc?v=2`,
+          "/models/character.enc?v=2",
           "MyCharacter12"
         );
         const blobUrl = URL.createObjectURL(new Blob([encryptedBlob]));
