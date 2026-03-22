@@ -9,7 +9,7 @@ export const portfolioConfig = {
     lastName: "Doe",
     initials: "JD",
     title: "Full Stack Developer",
-    subtitle: "Engineer",
+    subtitle: "Professional Engineer",
     email: "john@example.com",
     phone: "+1 (555) 123-4567",
     location: "San Francisco, CA",
